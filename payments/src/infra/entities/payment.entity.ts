@@ -1,35 +1,59 @@
-import { Column, Entity, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { CustomerEntity } from "./customer.entity";
+import { randomUUID } from 'crypto';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { CustomerEntity } from './customer.entity';
 
 export enum PaymentsTypes {
-    "BILLET",
-    "CREDIT_CARD",
-    "PIX"
+  'BILLET',
+  'CREDIT_CARD',
+  'PIX',
 }
 
-@Entity({name: "payment"})
+type data = {
+  id?: string;
+  value: number;
+  customer: CustomerEntity;
+  paymentType: PaymentsTypes;
+  deleted?: boolean;
+};
+
+@Entity({ name: 'payment' })
 export class PaymentEntity {
-    @PrimaryColumn({type: "uuid"})
-    id: string
-  
-    @Column({nullable: false, type: "float"})
-    value: number
+  @PrimaryColumn({ type: 'text' })
+  id: string;
 
-    @OneToMany(()=> CustomerEntity, (c)=> c.payments)
-    customer: CustomerEntity
+  @Column({ nullable: false, type: 'float' })
+  value: number;
 
-    @Column({type: "int"})
-    paymentType: PaymentsTypes
+  @OneToMany(() => CustomerEntity, (c) => c.payments)
+  customer: CustomerEntity;
 
-    @Column({type: "date", nullable: true})
-    payDate?: Date
-    
-    @Column({type: "bool", default: false})
-    deleted: boolean
+  @Column({ type: 'int' })
+  paymentType: PaymentsTypes;
 
-    @Column({type: "timestamp", })
-    createdAt: Date
-    
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @Column({ type: 'date', nullable: true })
+  payDate?: Date;
+
+  @Column({ type: 'bool', default: false })
+  deleted: boolean;
+
+  @Column({ type: 'timestamp' })
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  constructor(data?: data) {
+    if (!data) return;
+    this.id = data?.id ?? randomUUID();
+    this.customer = data.customer;
+    this.value = data.value;
+    this.paymentType = data.paymentType;
+    this.deleted = !!data.deleted;
+  }
 }

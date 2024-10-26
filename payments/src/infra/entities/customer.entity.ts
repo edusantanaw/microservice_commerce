@@ -3,7 +3,7 @@ import { PaymentEntity } from "./payment.entity";
 
 @Entity({name: "customer"})
 export class CustomerEntity {
-    @PrimaryColumn({ type: 'uuid' })
+    @PrimaryColumn({ type: 'text' })
     id: string
 
     @Column({type: "text"})
