@@ -4,20 +4,13 @@ services:
     image: postgres:14-alpine
     container_name: payments_db
     ports:
-      - "5432:5432"
+      - "5433:5432"  
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
-      - POSTGRES_DB=customers
+      - POSTGRES_DB=payments  
     volumes:
       - pgdata:/var/lib/postgresql/data
-    command: >
-      bash -c "
-      postgres &
-      while ! pg_isready -h localhost -p 5432 > /dev/null 2> /dev/null; do
-        sleep 1
-      done
-      psql -U $POSTGRES_USER -d users -c 'CREATE DATABASE payments;'"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
