@@ -13,4 +13,9 @@ export class CustomerRepository {
     const item = await this.repository.findOne({ where: { id } });
     return item;
   }
+
+  public async create(data: CustomerEntity) {
+    const item = await this.repository.save(data);
+    return item
+  }
 }

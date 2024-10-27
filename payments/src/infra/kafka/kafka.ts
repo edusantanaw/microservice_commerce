@@ -12,8 +12,8 @@ type config = {
 };
 
 @Injectable()
-export class KafkaConsumer {
-  constructor(private readonly eventEmitter: EventEmitter2) {}
+export class KafkaSevice {
+  constructor(protected eventEmitter: EventEmitter2) {}
 
   public async connect(data: config) {
     const kafka = new Kafka({
@@ -21,11 +21,13 @@ export class KafkaConsumer {
     });
     const consumer = kafka.consumer({ groupId: data.groupId });
     await consumer.connect();
-    await consumer.subscribe({ ...data.subscribe });
+    await consumer.subscribe({ ...data.subscribe,  });
     await consumer.run({
       eachMessage: async (payload) => {
-        const message = JSON.parse(Buffer.from(payload.message.value.toJSON().data).toString())
-       this.eventEmitter.emit(payload.topic, message);
+        const message = JSON.parse(
+          Buffer.from(payload.message.value.toJSON().data).toString(),
+        );
+        this.eventEmitter.emit(payload.topic, message);
       },
     });
   }
