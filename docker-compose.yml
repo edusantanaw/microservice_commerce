@@ -9,8 +9,17 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres123
       - POSTGRES_DB=payments  
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+
+  customer_db: 
+    image: postgres:14-alpine
+    container_name: customer_db
+    ports:
+      - "5434:5432"  
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=customers  
+      
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.3.0
@@ -53,6 +62,5 @@ services:
 
 
 volumes:
-  pgdata:
   zookeeper_data:
   kafka_data:

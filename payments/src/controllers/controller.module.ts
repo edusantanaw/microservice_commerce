@@ -1,10 +1,11 @@
-import { Module } from "@nestjs/common";
-import { PaymentController } from "./payment.controller";
-import { ServiceModule } from "src/services/service.module";
-import { CustomerController } from "./customer.controller";
+import { Module } from '@nestjs/common';
+import { KafkaModule } from 'src/infra/kafka/kafka.module';
+import { ServiceModule } from 'src/services/service.module';
+import { CustomerController } from './customer.controller';
+import { PaymentController } from './payment.controller';
 
 @Module({
-    controllers: [PaymentController, CustomerController],
-    imports: [ServiceModule]
+  imports: [ServiceModule, KafkaModule],
+  controllers: [PaymentController, CustomerController],
 })
 export class ControllerModule {}

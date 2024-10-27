@@ -22,6 +22,6 @@ model Customer {
   cpfCnpj String @unique
   password String
   updated DateTime @updatedAt
-  createdAt DateTime @db.Timestamp()
+  createdAt DateTime @db.Timestamp() @default(now())
   deleted Boolean @default(false)
 }
