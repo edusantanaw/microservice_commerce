@@ -7,6 +7,6 @@ export class CreatePaymentDTO {
     @IsNotEmpty({message: "O campo value é obrigatorio!"})
     value: number
     @IsNotEmpty({message: "O campo paymentType é obrigatorio!"})
-    @IsEnum(PaymentsTypes, {message: "tipo invalido!"})
+    @IsEnum(PaymentsTypes, {message: "tipo de pagamento invalido!"})
     paymentType: number
 }

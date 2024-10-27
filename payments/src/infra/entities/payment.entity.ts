@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import {
   Column,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
@@ -30,7 +31,7 @@ export class PaymentEntity {
   @Column({ nullable: false, type: 'float' })
   value: number;
 
-  @OneToMany(() => CustomerEntity, (c) => c.payments)
+  @ManyToOne(() => CustomerEntity, (c) => c.payments)
   customer: CustomerEntity;
 
   @Column({ type: 'int' })
@@ -42,7 +43,7 @@ export class PaymentEntity {
   @Column({ type: 'bool', default: false })
   deleted: boolean;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @UpdateDateColumn()

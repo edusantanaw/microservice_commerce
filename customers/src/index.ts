@@ -24,7 +24,6 @@ async function notifyConsumers(data: Customer) {
       ],
       
     });
-    console.log(res)
   } catch (error) {
     console.log(error);
   }

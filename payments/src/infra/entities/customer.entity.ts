@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { PaymentEntity } from './payment.entity';
 import { CustomerDTO } from 'src/dtos/customer.dto';
 
@@ -19,10 +19,11 @@ export class CustomerEntity {
   @Column({ type: 'bool', default: false })
   deleted: boolean;
 
-  @ManyToOne(() => PaymentEntity, (p) => p.customer)
-  payments: PaymentEntity;
+  @OneToMany(() => PaymentEntity, (p) => p.customer)
+  payments: PaymentEntity[];
 
-  constructor(data: CustomerDTO) {
+  constructor(data?: CustomerDTO) {
+    if (!data) return;
     this.id = data.id;
     this.cpfCnpj = data.cpfCnpj;
     this.name = data.name;

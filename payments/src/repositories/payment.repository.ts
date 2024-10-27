@@ -9,7 +9,12 @@ export class PaymentRepository {
     this.repository = dataSource.getRepository(PaymentEntity);
   }
   public async getAll(): Promise<{ data: PaymentEntity[]; total: number }> {
-    const [data, total] = await this.repository.findAndCount();
+    const [data, total] = await this.repository.findAndCount({
+      order: {
+        createdAt: 'ASC',
+      },
+      loadRelationIds: true
+    });
     return {
       data,
       total,
@@ -17,7 +22,7 @@ export class PaymentRepository {
   }
 
   public async create(data: PaymentEntity): Promise<PaymentEntity> {
-    const payment = await this.repository.save(data);
+    const payment = await this.repository.save({ ...data });
     return payment;
   }
 }
