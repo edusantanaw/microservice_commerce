@@ -16,8 +16,8 @@ export class PaymentRepository {
       loadRelationIds: true
     });
     return {
-      data,
       total,
+      data,
     };
   }
 

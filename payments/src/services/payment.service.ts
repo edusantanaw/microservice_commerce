@@ -26,7 +26,6 @@ export class PaymentService {
       ...data,
       customer: customerExists,
     });
-    console.log(payment)
     const created = await this.paymentRepository.create(payment);
     return created;
   }
