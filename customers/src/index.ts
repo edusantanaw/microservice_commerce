@@ -15,7 +15,7 @@ const app = express();
   app.use(express.json());
 
   await producer.connect();
-  await prisma.$connect().then(() => console.log("Database connectedS"));
+  await prisma.$connect().then(() => console.log("Database connected!"));
 
   app.post("/api/customers", createCustomerController);
 

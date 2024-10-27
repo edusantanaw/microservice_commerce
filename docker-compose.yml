@@ -59,8 +59,19 @@ services:
       KAFKA_CLUSTERS_0_NAME: "Local Kafka"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka:9093"
       KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper:2181"
-
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root      
+      MONGO_INITDB_ROOT_PASSWORD: password123    
+      MONGO_INITDB_DATABASE: messages      
+    ports:
+      - "27017:27017"                         
+    volumes:
+      - mongo_data:/data/db                  
 
 volumes:
   zookeeper_data:
   kafka_data:
+  mongo_data:
