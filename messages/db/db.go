@@ -32,7 +32,7 @@ func GetConnection() *MongoDB {
 }
 
 func connect() (*mongo.Database, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	url := os.Getenv("DATABASE_URL")
 	clientOptions := options.Client().ApplyURI(url)
